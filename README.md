@@ -16,51 +16,7 @@ pcsite/
 └── CNAME                # Кастомный домен
 ```
 
-## 🚀 Деплой на GitHub Pages
 
-### Шаг 1: Создайте репозиторий на GitHub
-1. Перейдите на https://github.com/new
-2. Укажите имя: `ваш-логин.github.io` (или любое другое)
-3. Выберите Public
-4. Нажмите "Create repository"
-
-### Шаг 2: Загрузите файлы (через git)
-```bash
-# Клонировать репозиторий
-git clone https://github.com/ваш-логин/ваш-репозиторий.git
-cd ваш-репозиторий
-
-# Скопировать файлы сайта
-cp -r /mnt/virt/pcsite/* .
-
-# Добавить и отправить
-git add .
-git commit -m "PC Sim News website"
-git push origin main
-```
-
-### Шаг 3: Настроить GitHub Pages
-1. В репозитории: Settings → Pages
-2. Branch: main, папка: / (root)
-3. Сохранить
-
-### Шаг 4: Кастомный домен (опционально)
-В файле `CNAME` укажите:
-```
-pcsimnews.work.gd
-```
-Затем в настройках домена добавьте CNAME запись:
-```
-pcsimnews.work.gd → ваш-логин.github.io
-```
-
-## 🌐 Локальный запуск
-
-```bash
-cd /mnt/virt/pcsite
-python3 -m http.server 8080
-```
-Открыть: http://localhost:8080
 
 ## 📊 Разделы сайта
 
