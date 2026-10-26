@@ -1,0 +1,832 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>PC Sim News — Официальное сообщество PC Simulator</title>
+    <meta name="description" content="PC Sim News — комьюнити-компания которая раздает новости от Yiming и занимается обучением игроков PC Simulator.">
+    <link rel="icon" href="assets/img_000.webp" type="image/webp">
+    <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@300;400;600;700;800&display=swap" rel="stylesheet">
+    <style>
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+
+        :root {
+            --primary: #6366f1;
+            --secondary: #10b981;
+            --accent: #8b5cf6;
+            --dark: #0f172a;
+            --darker: #020617;
+            --light: #f8fafc;
+            --gray: #94a3b8;
+            --card-bg: rgba(30, 41, 59, 0.6);
+        }
+
+        body {
+            font-family: 'Montserrat', sans-serif;
+            background: var(--darker);
+            color: var(--light);
+            line-height: 1.6;
+            overflow-x: hidden;
+        }
+
+        /* Animated background */
+        body::before {
+            content: '';
+            position: fixed;
+            inset: 0;
+            background:
+                radial-gradient(ellipse at 20% 20%, rgba(99, 102, 241, 0.15) 0%, transparent 50%),
+                radial-gradient(ellipse at 80% 80%, rgba(16, 185, 129, 0.1) 0%, transparent 50%),
+                radial-gradient(ellipse at 50% 50%, rgba(139, 92, 246, 0.05) 0%, transparent 70%);
+            pointer-events: none;
+            z-index: -1;
+        }
+
+        /* Header */
+        header {
+            position: fixed;
+            top: 0;
+            width: 100%;
+            background: rgba(2, 6, 23, 0.95);
+            backdrop-filter: blur(20px);
+            border-bottom: 1px solid rgba(99, 102, 241, 0.2);
+            z-index: 1000;
+            padding: 1rem 0;
+        }
+
+        nav {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 0 2rem;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .logo {
+            display: flex;
+            align-items: center;
+            gap: 0.75rem;
+            font-size: 1.5rem;
+            font-weight: 800;
+            text-decoration: none;
+            color: var(--light);
+        }
+
+        .logo img {
+            width: 40px;
+            height: 40px;
+            border-radius: 10px;
+            border: 2px solid var(--primary);
+        }
+
+        .logo span {
+            background: linear-gradient(135deg, var(--primary), var(--secondary));
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+        }
+
+        .nav-links {
+            display: flex;
+            gap: 2rem;
+            list-style: none;
+        }
+
+        .nav-links a {
+            color: var(--gray);
+            text-decoration: none;
+            font-weight: 600;
+            transition: all 0.3s;
+            position: relative;
+        }
+
+        .nav-links a:hover { color: var(--primary); }
+
+        .nav-links a::after {
+            content: '';
+            position: absolute;
+            bottom: -5px;
+            left: 0;
+            width: 0;
+            height: 2px;
+            background: linear-gradient(90deg, var(--primary), var(--secondary));
+            transition: width 0.3s;
+        }
+
+        .nav-links a:hover::after { width: 100%; }
+
+        /* Hero */
+        .hero {
+            min-height: 100vh;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            text-align: center;
+            padding: 8rem 2rem 4rem;
+            position: relative;
+        }
+
+        .hero h1 {
+            font-size: clamp(2.5rem, 8vw, 5rem);
+            font-weight: 800;
+            background: linear-gradient(135deg, var(--primary), var(--secondary));
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            margin-bottom: 1rem;
+            animation: glow 3s ease-in-out infinite;
+        }
+
+        @keyframes glow {
+            0%, 100% { filter: brightness(1); }
+            50% { filter: brightness(1.2); }
+        }
+
+        .hero p {
+            font-size: 1.25rem;
+            color: var(--gray);
+            max-width: 700px;
+            margin: 1.5rem auto;
+            line-height: 1.8;
+        }
+
+        .slogan {
+            display: inline-block;
+            margin-top: 2rem;
+            padding: 1rem 2.5rem;
+            background: rgba(99, 102, 241, 0.1);
+            border: 2px solid var(--primary);
+            border-radius: 50px;
+            color: var(--primary);
+            font-weight: 700;
+            font-size: 1.1rem;
+            letter-spacing: 1px;
+            text-transform: uppercase;
+            animation: pulse 2s infinite;
+        }
+
+        @keyframes pulse {
+            0%, 100% { box-shadow: 0 0 0 0 rgba(99, 102, 241, 0.4); }
+            50% { box-shadow: 0 0 20px 10px rgba(99, 102, 241, 0.1); }
+        }
+
+        .hero-buttons {
+            display: flex;
+            gap: 1rem;
+            justify-content: center;
+            margin-top: 2rem;
+            flex-wrap: wrap;
+        }
+
+        /* Buttons */
+        .btn {
+            display: inline-flex;
+            align-items: center;
+            gap: 0.5rem;
+            padding: 1rem 2rem;
+            background: linear-gradient(135deg, var(--primary), var(--accent));
+            color: white;
+            text-decoration: none;
+            border-radius: 12px;
+            font-weight: 600;
+            transition: all 0.3s;
+            border: none;
+            cursor: pointer;
+        }
+
+        .btn:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 10px 30px rgba(99, 102, 241, 0.4);
+        }
+
+        .btn-outline {
+            background: transparent;
+            border: 2px solid var(--primary);
+            color: var(--primary);
+        }
+
+        .btn-outline:hover {
+            background: var(--primary);
+            color: white;
+        }
+
+        /* Sections */
+        section {
+            padding: 6rem 2rem;
+            max-width: 1200px;
+            margin: 0 auto;
+        }
+
+        h2 {
+            font-size: 2.5rem;
+            text-align: center;
+            margin-bottom: 3rem;
+            background: linear-gradient(135deg, var(--primary), var(--accent));
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+        }
+
+        /* Why Us Section */
+        .why-us-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+            gap: 2rem;
+        }
+
+        .why-card {
+            background: var(--card-bg);
+            border: 1px solid rgba(99, 102, 241, 0.2);
+            border-radius: 20px;
+            padding: 2rem;
+            text-align: center;
+            transition: all 0.3s;
+            backdrop-filter: blur(10px);
+        }
+
+        .why-card:hover {
+            transform: translateY(-10px);
+            border-color: var(--primary);
+            box-shadow: 0 20px 40px rgba(99, 102, 241, 0.2);
+        }
+
+        .why-card .icon {
+            font-size: 3rem;
+            margin-bottom: 1rem;
+        }
+
+        .why-card h3 {
+            color: var(--light);
+            margin-bottom: 1rem;
+            font-size: 1.25rem;
+        }
+
+        .why-card p {
+            color: var(--gray);
+            font-size: 0.95rem;
+        }
+
+        /* Gallery Notice */
+        .gallery-notice {
+            background: linear-gradient(135deg, rgba(239, 68, 68, 0.1), rgba(245, 158, 11, 0.1));
+            border: 1px solid rgba(239, 68, 68, 0.3);
+            border-radius: 16px;
+            padding: 2rem;
+            margin: 3rem 0;
+            text-align: center;
+        }
+
+        .gallery-notice h3 {
+            color: #ef4444;
+            margin-bottom: 1rem;
+            font-size: 1.5rem;
+        }
+
+        .gallery-notice p {
+            color: var(--gray);
+            max-width: 600px;
+            margin: 0 auto;
+        }
+
+        /* Artem Section */
+        .artem-section {
+            background: linear-gradient(180deg, transparent, rgba(99, 102, 241, 0.05));
+        }
+
+        .artem-card {
+            background: var(--card-bg);
+            border: 1px solid rgba(99, 102, 241, 0.2);
+            border-radius: 24px;
+            padding: 3rem;
+            display: grid;
+            grid-template-columns: 1fr 2fr;
+            gap: 3rem;
+            align-items: center;
+            backdrop-filter: blur(10px);
+        }
+
+        .artem-images {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            gap: 1.5rem;
+        }
+
+        .artem-images img {
+            border-radius: 16px;
+            box-shadow: 0 10px 40px rgba(0,0,0,0.3);
+            transition: transform 0.3s;
+        }
+
+        .artem-images img:hover {
+            transform: scale(1.05);
+        }
+
+        .artem-images .logo-img {
+            width: 140px;
+            height: 140px;
+            border-radius: 50%;
+            border: 4px solid var(--primary);
+            animation: float 3s ease-in-out infinite;
+        }
+
+        .artem-images .char-img {
+            width: 100%;
+            max-width: 280px;
+            border: 3px solid var(--accent);
+        }
+
+        @keyframes float {
+            0%, 100% { transform: translateY(0); }
+            50% { transform: translateY(-10px); }
+        }
+
+        .artem-info h3 {
+            font-size: 2.5rem;
+            margin-bottom: 0.5rem;
+            background: linear-gradient(135deg, var(--primary), var(--accent));
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+        }
+
+        .artem-info .role {
+            color: var(--secondary);
+            font-size: 1.2rem;
+            margin-bottom: 1.5rem;
+            font-weight: 600;
+        }
+
+        .artem-info .quote {
+            font-style: italic;
+            color: var(--gray);
+            padding: 1.5rem;
+            background: rgba(0,0,0,0.3);
+            border-radius: 12px;
+            margin-bottom: 2rem;
+            border-left: 4px solid var(--primary);
+            font-size: 1.1rem;
+            line-height: 1.8;
+        }
+
+        .stats {
+            display: grid;
+            grid-template-columns: repeat(2, 1fr);
+            gap: 1rem;
+        }
+
+        .stat {
+            background: rgba(99, 102, 241, 0.1);
+            padding: 1.25rem;
+            border-radius: 12px;
+            border: 1px solid rgba(99, 102, 241, 0.2);
+            transition: all 0.3s;
+        }
+
+        .stat:hover {
+            background: rgba(99, 102, 241, 0.2);
+            transform: scale(1.05);
+        }
+
+        .stat-label {
+            font-size: 0.875rem;
+            color: var(--gray);
+            margin-bottom: 0.25rem;
+        }
+
+        .stat-value {
+            font-size: 1.25rem;
+            font-weight: 700;
+            color: var(--primary);
+        }
+
+        /* Cards */
+        .card {
+            background: var(--card-bg);
+            border: 1px solid rgba(99, 102, 241, 0.2);
+            border-radius: 20px;
+            padding: 3rem;
+            margin-bottom: 2rem;
+            backdrop-filter: blur(10px);
+            transition: all 0.3s;
+        }
+
+        .card:hover {
+            border-color: var(--primary);
+            box-shadow: 0 10px 40px rgba(99, 102, 241, 0.1);
+        }
+
+        .card h3 {
+            color: var(--secondary);
+            margin-bottom: 1.5rem;
+            font-size: 1.5rem;
+        }
+
+        .card p {
+            color: var(--gray);
+            margin-bottom: 1rem;
+            line-height: 1.8;
+        }
+
+        .card strong {
+            color: var(--light);
+        }
+
+        .warning {
+            background: rgba(245, 158, 11, 0.1);
+            border: 1px solid rgba(245, 158, 11, 0.3);
+            color: #f59e0b;
+            padding: 1.5rem;
+            border-radius: 12px;
+            margin-top: 2rem;
+            font-weight: 600;
+        }
+
+        /* Image Gallery */
+        .image-gallery {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 1.5rem;
+            margin-top: 3rem;
+        }
+
+        .image-gallery img {
+            width: 100%;
+            height: 200px;
+            object-fit: cover;
+            border-radius: 16px;
+            border: 2px solid rgba(99, 102, 241, 0.2);
+            transition: all 0.3s;
+        }
+
+        .image-gallery img:hover {
+            transform: scale(1.05);
+            border-color: var(--primary);
+            box-shadow: 0 10px 30px rgba(99, 102, 241, 0.3);
+        }
+
+        /* Footer */
+        footer {
+            background: rgba(2, 6, 23, 0.95);
+            border-top: 1px solid rgba(99, 102, 241, 0.2);
+            padding: 4rem 2rem;
+            text-align: center;
+            color: var(--gray);
+        }
+
+        footer h4 {
+            color: var(--light);
+            margin-bottom: 1.5rem;
+            font-size: 1.5rem;
+        }
+
+        footer a {
+            color: var(--primary);
+            text-decoration: none;
+            transition: color 0.3s;
+        }
+
+        footer a:hover { color: var(--secondary); }
+
+        .footer-links {
+            display: flex;
+            justify-content: center;
+            gap: 2rem;
+            margin: 2rem 0;
+            flex-wrap: wrap;
+        }
+
+        /* Channel Cards Section */
+        .channels-section {
+            background: linear-gradient(180deg, rgba(99, 102, 241, 0.05), transparent);
+        }
+
+        .channels-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 2rem;
+        }
+
+        .channel-card {
+            background: var(--card-bg);
+            border: 1px solid rgba(99, 102, 241, 0.2);
+            border-radius: 20px;
+            padding: 2.5rem;
+            text-align: center;
+            backdrop-filter: blur(10px);
+            transition: all 0.3s;
+        }
+
+        .channel-card:hover {
+            transform: translateY(-8px);
+            border-color: var(--primary);
+            box-shadow: 0 20px 40px rgba(99, 102, 241, 0.2);
+        }
+
+        .channel-card.proovs {
+            border-color: rgba(99, 102, 241, 0.4);
+            background: linear-gradient(135deg, rgba(99, 102, 241, 0.1), var(--card-bg));
+        }
+
+        .channel-card.community {
+            border-color: rgba(16, 185, 129, 0.4);
+            background: linear-gradient(135deg, rgba(16, 185, 129, 0.1), var(--card-bg));
+        }
+
+        .channel-card.email {
+            border-color: rgba(139, 92, 246, 0.4);
+            background: linear-gradient(135deg, rgba(139, 92, 246, 0.1), var(--card-bg));
+        }
+
+        .channel-card h3 {
+            font-size: 1.5rem;
+            margin-bottom: 0.5rem;
+            color: var(--light);
+        }
+
+        .channel-card .channel-desc {
+            color: var(--gray);
+            font-size: 0.9rem;
+            margin-bottom: 1.5rem;
+        }
+
+        .qr-code {
+            width: 150px;
+            height: 150px;
+            margin: 0 auto 1.5rem;
+            padding: 10px;
+            background: white;
+            border-radius: 12px;
+            box-shadow: 0 4px 20px rgba(0,0,0,0.3);
+        }
+
+        .qr-code img {
+            width: 100%;
+            height: 100%;
+        }
+
+        .channel-link {
+            display: inline-flex;
+            align-items: center;
+            gap: 0.5rem;
+            padding: 0.75rem 1.5rem;
+            background: var(--primary);
+            color: white;
+            text-decoration: none;
+            border-radius: 10px;
+            font-weight: 600;
+            transition: all 0.3s;
+        }
+
+        .channel-card.community .channel-link {
+            background: var(--secondary);
+        }
+
+        .channel-card.email .channel-link {
+            background: var(--accent);
+        }
+
+        .channel-link:hover {
+            transform: scale(1.05);
+            box-shadow: 0 5px 20px rgba(99, 102, 241, 0.4);
+        }
+
+        /* Mobile */
+        @media (max-width: 768px) {
+            .artem-card {
+                grid-template-columns: 1fr;
+                text-align: center;
+            }
+
+            .stats {
+                grid-template-columns: 1fr;
+            }
+
+            .nav-links {
+                display: none;
+            }
+
+            .hero h1 {
+                font-size: 2.5rem;
+            }
+
+            .image-gallery {
+                grid-template-columns: 1fr;
+            }
+        }
+    </style>
+</head>
+<body>
+    <header>
+        <nav>
+            <a href="#" class="logo">
+                <img src="assets/img_000.webp" alt="PC Sim News">
+                <span>PC Sim News</span>
+            </a>
+            <ul class="nav-links">
+                <li><a href="#home">Главная</a></li>
+                <li><a href="#why-us">Почему мы</a></li>
+                <li><a href="#artem">Артем</a></li>
+                <li><a href="#news">Новости</a></li>
+                <li><a href="#pcs-dos">PCS-DOS</a></li>
+                <li><a href="#gallery">Галерея</a></li>
+                <li><a href="#channels">Каналы</a></li>
+            </ul>
+        </nav>
+    </header>
+
+    <section class="hero" id="home">
+        <div>
+            <h1>PC Sim News</h1>
+            <p>Добро пожаловать в PC Sim News! Мы комьюнити-компания, которая занимается тем, чтобы раздавать новости от Yiming (разработчика PC Simulator) и самого PC Simulator. Так же мы занимаемся обучением игроков и создаём крутые проекты.</p>
+            <div class="slogan">Newer News, Newer Players!</div>
+            <br><br>
+            <div class="hero-buttons">
+                <a href="https://t.me/pruvipcsimnews" target="_blank" class="btn">📱 Telegram Proovs</a>
+                <a href="https://t.me/pcsimnewscomunity" target="_blank" class="btn btn-outline">👥 Сообщество</a>
+            </div>
+        </div>
+    </section>
+
+    <!-- Why Us Section -->
+    <section id="why-us">
+        <h2>Почему именно мы?</h2>
+        <div class="why-us-grid">
+            <div class="why-card">
+                <div class="icon">📰</div>
+                <h3>Свежие новости</h3>
+                <p>Получайте новости первыми от Yiming и команды PC Simulator. Мы следим за всеми обновлениями и делится ими с вами.</p>
+            </div>
+            <div class="why-card">
+                <div class="icon">🎓</div>
+                <h3>Обучение</h3>
+                <p>Мы обучаем игроков всех уровней — от новичков до про. Помогаем разобраться в механиках и секретах игры.</p>
+            </div>
+            <div class="why-card">
+                <div class="icon">🎮</div>
+                <h3>Проекты</h3>
+                <p>Разрабатываем собственные проекты, такие как PCS-DOS, которые расширяют возможности игры.</p>
+            </div>
+            <div class="why-card">
+                <div class="icon">❤️</div>
+                <h3>Сообщество</h3>
+                <p>Дружелюбное комьюнити, где каждый может найти друзей по интересам и получить помощь.</p>
+            </div>
+            <div class="why-card">
+                <div class="icon">⚡</div>
+                <h3>Скорость</h3>
+                <p>Быстрая доставка новостей и оперативная реакция на события в игре PC Simulator.</p>
+            </div>
+            <div class="why-card">
+                <div class="icon">🛠️</div>
+                <h3>Качество</h3>
+                <p>Внимание к деталям и качество контента — наш приоритет. Мы делаем лучше для вас.</p>
+            </div>
+        </div>
+    </section>
+
+    <!-- Gallery Notice -->
+    <section>
+        <div class="gallery-notice">
+            <h3>⚠️ А что насчёт галлери?</h3>
+            <p>Честно? Мы не очень любим <strong>галлери</strong>. Там всё слишком пёстро, медленно и неудобно. Вместо этого у нас тут нормальный сайт — быстрый, красивый и удобный. Галлери оставим для тех, кто привык, а мы делаем по-своему! 💪</p>
+        </div>
+    </section>
+
+    <!-- Artem Section -->
+    <section class="artem-section" id="artem">
+        <h2>Наш Маскот</h2>
+        <div class="artem-card">
+            <div class="artem-images">
+                <img src="assets/img_000.webp" alt="Логотип Артема" class="logo-img">
+                <img src="assets/artem.png" alt="Артем персонаж" class="char-img">
+            </div>
+            <div class="artem-info">
+                <h3>Артем</h3>
+                <p class="role">Главный маскот PC Sim News</p>
+                <p class="quote">Артем всё ещё остается главным маскотом нашей компании, даже если он произнесёт "ГОЛДАААА!" то психом останется роза</p>
+                <div class="stats">
+                    <div class="stat"><div class="stat-label">Имя</div><div class="stat-value">Артем</div></div>
+                    <div class="stat"><div class="stat-label">Возраст</div><div class="stat-value">15 лет</div></div>
+                    <div class="stat"><div class="stat-label">Рост</div><div class="stat-value">175 см</div></div>
+                    <div class="stat"><div class="stat-label">Вес</div><div class="stat-value">115 кг</div></div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- News Section -->
+    <section id="news">
+        <h2>PC Sim News Community</h2>
+        <div class="card">
+            <p><strong>Самый главный проект в пксн.</strong> Именно он вдохновляет каждого читать новости и привлекает новеньких.</p>
+            <p>Будьте в курсе всегда! Будьте в курсе с помощью социальных сетей, которым можно проследить, что произошло с PCSN!</p>
+            <a href="https://t.me/pcsimnewscomunity" target="_blank" class="btn">Перейти в коммьюнити →</a>
+        </div>
+    </section>
+
+    <!-- PCS-DOS Section -->
+    <section id="pcs-dos">
+        <h2>PCS-DOS</h2>
+        <div class="card">
+            <h3>DOS-система для ностальгии на базе FreeDOS</h3>
+            <p><strong>Главное отличие:</strong> Интернет, приём USB-флэшек и прочие современные технологии</p>
+            <p><strong>Основано не на MS-DOS!</strong></p>
+            <p>Дисковая ОС 16-битная, но поддерживает устройства на базе x86 (не 8086!)</p>
+            <p><strong>Примечание:</strong> Скоро появится после разработки Основной PCS-DOS — PCS32DOS. Будет основано на FreeDOS-32. Не уверен, что будет работать как часы — там есть костыли, и они могут неправильно работать.</p>
+            <p style="color: #f59e0b;"><strong>P.S.</strong> FreeDOS-32 находится всё ещё в альфе и был заброшен. Там используется DPMI, который также можно установить на обычный FreeDOS, но мы не советуем этого делать — это очень опасно без подходящих хостов, ВМ и GPU!</p>
+            <p><strong>Для тех, кто ностальгирует по 90-м, это идеальный DOS!</strong></p>
+            <p><strong>Почему?</strong></p>
+            <p><strong>Первое — Игры!</strong> Игры это самое главное, что должен быть в DOS, ведь DOS скучный, и надо развеселить пользователя.</p>
+            <p><strong>Второе — Программы!</strong> Программы по типу Office DOS, Acrobat Reader и прочие — так же подходит для работы!</p>
+            <p><strong>Третье — Оболочки!</strong> Есть знаменитые оболочки, но они только файлы передают. Поэтому представляем! Полiт — в нём даже есть документация! (не наше!)</p>
+            <div class="warning">
+                ⚠️ PRE ALPHA ВЫШЕЛ! ТЕСТИРУЙ И СООБЩАЙ ОБ ОШИБКЕ ПО АДРЕСУ: pcsimnews.commercial.531@mail.ru
+            </div>
+        </div>
+    </section>
+
+    <!-- Gallery Section -->
+    <section id="gallery">
+        <h2>Галерея</h2>
+        <p style="text-align: center; color: var(--gray); margin-bottom: 2rem;">Скриншоты и моменты из мира PC Simulator</p>
+        <div class="image-gallery">
+            <img src="assets/gallery/01.png" alt="PC Simulator" loading="lazy">
+            <img src="assets/gallery/02.png" alt="Артем" loading="lazy">
+            <img src="assets/gallery/03.webp" alt="PC Sim News" loading="lazy">
+            <img src="assets/gallery/04.webp" alt="Logo" loading="lazy">
+            <img src="assets/gallery/05.webp" alt="PCS-DOS" loading="lazy">
+            <img src="assets/gallery/06.webp" alt="Community" loading="lazy">
+        </div>
+    </section>
+
+    <!-- Channels Section -->
+    <section class="channels-section" id="channels">
+        <h2>Наши Каналы</h2>
+        <p style="text-align: center; color: var(--gray); margin-bottom: 3rem;">Сканируй QR-код или переходи по ссылке — выбирай удобный способ!</p>
+        <div class="channels-grid">
+            <div class="channel-card proovs">
+                <h3>📢 Proovs</h3>
+                <p class="channel-desc">Декоротивный канал с пруфами и новостями</p>
+                <div class="qr-code">
+                    <img src="assets/qr_pruvipcsimnews.png" alt="QR Proovs">
+                </div>
+                <a href="https://t.me/pruvipcsimnews" target="_blank" class="channel-link">Присоединиться →</a>
+            </div>
+            <div class="channel-card community">
+                <h3>👥 Сообщество</h3>
+                <p class="channel-desc">Главный проект PCSN — новости и обсуждения</p>
+                <div class="qr-code">
+                    <img src="assets/qr_pcsimnewscomunity.png" alt="QR Community">
+                </div>
+                <a href="https://t.me/pcsimnewscomunity" target="_blank" class="channel-link">Вступить →</a>
+            </div>
+            <div class="channel-card email">
+                <h3>📧 Email</h3>
+                <p class="channel-desc">Для коммерческих вопросов и сотрудничества</p>
+                <div class="qr-code">
+                    <img src="assets/qr_email.png" alt="QR Email">
+                </div>
+                <a href="mailto:pcsimnews.commercial.531@mail.ru" class="channel-link">Написать →</a>
+            </div>
+        </div>
+    </section>
+
+    <footer>
+        <h4>PC Sim News</h4>
+        <div class="footer-links">
+            <a href="#home">Главная</a>
+            <a href="#why-us">Почему мы</a>
+            <a href="#artem">Артем</a>
+            <a href="#pcs-dos">PCS-DOS</a>
+            <a href="#gallery">Галерея</a>
+            <a href="#channels">Каналы</a>
+        </div>
+        <p>© 2026 PC Sim News. Все права защищены.</p>
+        <p>Email: <a href="mailto:pcsimnews.commercial.531@mail.ru">pcsimnews.commercial.531@mail.ru</a></p>
+        <p>Версия сайта: Release 1.0</p>
+        <p style="margin-top: 1rem; font-size: 0.875rem; opacity: 0.5;">Сайт создан с любовью для сообщества PC Simulator</p>
+    </footer>
+
+    <script>
+        // Smooth scroll
+        document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+            anchor.addEventListener('click', function (e) {
+                e.preventDefault();
+                const target = document.querySelector(this.getAttribute('href'));
+                if (target) target.scrollIntoView({ behavior: 'smooth' });
+            });
+        });
+
+        // Active nav on scroll
+        const sections = document.querySelectorAll('section[id]');
+        window.addEventListener('scroll', () => {
+            let current = '';
+            sections.forEach(section => {
+                if (scrollY >= section.offsetTop - 100) current = section.getAttribute('id');
+            });
+            document.querySelectorAll('.nav-links a').forEach(link => {
+                link.style.color = '';
+                if (link.getAttribute('href') === `#${current}`) link.style.color = '#6366f1';
+            });
+        });
+    </script>
+</body>
+</html>
