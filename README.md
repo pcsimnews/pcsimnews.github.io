@@ -34,4 +34,6 @@ pcsite/
 |-------|--------|--------|
 | Proovs | https://t.me/pruvipcsimnews | qr_pruvipcsimnews.png |
 | Сообщество | https://t.me/pcsimnewscomunity | qr_pcsimnewscomunity.png |
-| Email | pcsimnews.commercial.531@mail.ru | qr_email.png |
+| Email | pcsimnews.commercial.531@mail.ru | qr_email.png 
+
+## ВЕРСИЯ MYSTERY UPDATE 1.1!
