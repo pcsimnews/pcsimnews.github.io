@@ -12,8 +12,7 @@ pcsite/
 │   ├── artem.png        # Персонаж Артем
 │   ├── qr_*.png         # QR-коды каналов
 │   └── img_*.webp       # Остальные изображения
-├── .nojekyll            # Для GitHub Pages
-└── CNAME                # Кастомный домен
+└──  .nojekyll            # Для GitHub Pages
 ```
 
 
